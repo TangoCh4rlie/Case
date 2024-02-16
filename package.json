@@ -38,6 +38,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@prisma/client": "^5.9.1"
+		"@prisma/client": "^5.9.1",
+		"flowbite-svelte": "^0.44.23"
 	}
 }
