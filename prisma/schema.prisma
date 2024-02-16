@@ -23,7 +23,7 @@ model Case {
   id          String   @id @default(uuid())
   date        DateTime @default(now())
   description String
-  color       String @default("#F0F0F0")
+  color       Color @default(F0F0F0)
   place       String?
   photo       String[]
   people      String[]
@@ -34,8 +34,13 @@ model Case {
   user User @relation(fields: [userId], references: [id])
 }
 
-// model Tag {
-//   id String @id @default(uuid())
-//   name String
-
-// }
+enum Color {
+  F0F0F0 //gray
+  FF9B9B //red
+  BEF388 //green
+  B4F6FF //blue
+  FFC37C //orange
+  CF93FF //purple
+  AEB9FF //darkblue
+  FF8CFA //pink
+}

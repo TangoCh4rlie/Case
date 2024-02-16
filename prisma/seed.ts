@@ -12,6 +12,7 @@ async function main() {
                 create: [
                     {
                         description: 'Case 1',
+                        color: 'FF9B9B',
                         place: 'Location 1',
                         photo: ['path/to/photo1.jpg'],
                         people: ['Person 1', 'Person 2'],
@@ -19,6 +20,7 @@ async function main() {
                     },
                     {
                         description: 'Case 2',
+                        color: 'BEF388',
                         place: 'Location 2',
                         photo: ['path/to/photo2.jpg'],
                         people: ['Person 3', 'Person 4'],
@@ -26,6 +28,7 @@ async function main() {
                     },
                     {
                         description: 'Case 3',
+                        color: 'B4F6FF',
                         place: 'Location 3',
                         photo: ['path/to/photo3.jpg'],
                         people: ['Person 5', 'Person 6'],
