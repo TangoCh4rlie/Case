@@ -3,9 +3,8 @@
 	export let color;
     import { Color } from '../types/case';
 
-    const colorOptions = Object.keys(Color).filter((item) => {
-		return isNaN(Number(item));
-	});
+    const colorOptions = Array(Color);
+	console.log(colorOptions)
 </script>
 
 <div>

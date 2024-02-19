@@ -23,6 +23,7 @@
 					>
 						{data.user[0].cases.indexOf(info)}
 						{info.description}
+						{info.color }
 					</div>
 					<Popover class="w-64 text-sm font-light bg-popup/75" triggeredBy="#case-{info.id}">
 						<div class="flex flex-row">
