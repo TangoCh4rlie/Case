@@ -6,12 +6,15 @@
 </script>
 
 <div>
-	<div class="main">
-		<div class="week">
+	<div class="flex justify-center border">
+		<div class="grid grid-cols-7 gap-10">
 			{#each data.user as day (day.cases)}
 				{#each day.cases as info}
 					<div class="case" id="case-{info.id}" style="background-color: #{info.color};">{info.description}</div>
-					<Popover class="w-64 text-sm font-light " title="Popover title" triggeredBy="#case-{info.id}" >And here's some amazing content. It's very engaging. Right?</Popover>
+					<Popover class="w-64 text-sm font-light bg-popup/75" triggeredBy="#case-{info.id}" >
+						<p>{info.date.toLocaleDateString()}</p>
+						<input type="text" class="w-full p-2 bg-transparent" placeholder="Description" />
+					</Popover>
 				{/each}
 			{/each}
 		</div>
@@ -19,7 +22,7 @@
 	
 </div>
 
-<style>
+<style lang="postcss">
 	/* display my week as grid with each case ahev the same place and center my main */
 	/* make my case square with the same width */
 	.case {
@@ -31,7 +34,7 @@
 		border-style: solid;
 		border-radius: 20;
 		border-color: blue;
-		margin: 30px;
+		margin: 10px;
 	}
 	.week {
 		display: grid;
