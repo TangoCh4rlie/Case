@@ -10,7 +10,7 @@ type Case = {
     userId: string
 }
 
-enum Color {
+export enum Color {
     gray = "F0F0F0",
     red = "FF9B9B",
     green = "BEF388",
