@@ -1,11 +1,10 @@
 import prisma from "$lib/prisma";
-import { Color } from "$lib/types/case";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async () => {
     const today = new Date();
     const dayOfWeek = today.getDay();
-    const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+    const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? - 6 : 1);
     const lastMonday = new Date(today.setDate(diff));
 
     const userWithCases = await prisma.user.findUnique({
@@ -13,6 +12,7 @@ export const load: PageServerLoad = async () => {
             username: "JohnDoe",
         },
         select: {
+            id: true,
             username: true,
             img: true,
             cases: {
@@ -24,28 +24,30 @@ export const load: PageServerLoad = async () => {
                 }
             }
         },
-    });
-
-    if (!userWithCases) {
+    });    
+    
+    if ( !userWithCases ) {
         return { user: null, cases: null };
+    } else {
+        while (userWithCases.cases.length < dayOfWeek - 1) {
+            userWithCases.cases.push({
+                id: '',
+                date: today,
+                description: '',
+                color: "FADBCD",
+                place: null,
+                photo: [],
+                people: [],
+                tag: [],
+                userId: userWithCases.id
+            });
+        }
+    
+        const user = {id: userWithCases.id ,username: userWithCases.username, img: userWithCases.img};
+        const cases = userWithCases.cases
+    
+        return { user , cases };
     }
 
-    while (userWithCases.cases.length < dayOfWeek) {
-        userWithCases.cases.push({
-            id: '',
-            date: today,
-            description: '',
-            color: "FADBCD",
-            place: null,
-            photo: [],
-            people: [],
-            tag: [],
-            userId: userWithCases.cases[0].userId
-        });
-    }
-
-    const user = {username: userWithCases.username, img: userWithCases.img};
-    const cases = userWithCases.cases
-
-    return { user , cases };
+    
 };

@@ -11,7 +11,7 @@ export type Case = {
 }
 
 export enum Color {
-    waitng = "FADBCD",
+    waiting = "FADBCD",
     gray = "F0F0F0",
     red = "FF9B9B",
     green = "BEF388",

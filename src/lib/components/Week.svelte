@@ -5,13 +5,14 @@
 	import { Color, type Case } from '$lib/types/case';
 
 	export let data: PageData;
+	// @ts-ignore
 	const cases: Case[] = data.cases;
 
 	const emptyCases: string[] = [];
 	const lenghtCases = cases.length;
 
-	while ( lenghtCases + emptyCases.length < 7) {
-		emptyCases.push("emptyCase");
+	while (lenghtCases + emptyCases.length < 7) {
+		emptyCases.push('emptyCase');
 	}
 </script>
 
@@ -42,7 +43,10 @@
 				</Popover>
 			{/each}
 			{#each emptyCases as e}
-				<div class="flex justify-center items-center w-20 h-20 rounded-2xl" style="background-color: #F0F0F0"></div>
+				<div
+					class="flex justify-center items-center w-20 h-20 rounded-2xl"
+					style="background-color: #F0F0F0"
+				></div>
 			{/each}
 		</div>
 	</div>
