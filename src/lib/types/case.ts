@@ -1,9 +1,9 @@
-type Case = {
+export type Case = {
     id: string;
-    date: string;
+    date: Date;
     description: string;
     color: Color;
-    place: string;
+    place: string | null;
     photo: string[]
     people: string[]
     tag: string[]
@@ -11,6 +11,7 @@ type Case = {
 }
 
 export enum Color {
+    waitng = "FADBCD",
     gray = "F0F0F0",
     red = "FF9B9B",
     green = "BEF388",

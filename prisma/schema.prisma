@@ -35,6 +35,7 @@ model Case {
 }
 
 enum Color {
+  FADBCD //black
   F0F0F0 //gray
   FF9B9B //red
   BEF388 //green
