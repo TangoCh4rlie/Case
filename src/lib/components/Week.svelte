@@ -32,19 +32,6 @@
 					{cases.indexOf(info)}
 					{info.description}
 				</div>
-				<Popover class="w-64 text-sm font-light bg-popup/75" triggeredBy="#case-{info.id}">
-					<div class="flex flex-row">
-						<p>{info.date.toLocaleDateString()}</p>
-						<ColorPicker bind:color={info.color} />
-					</div>
-					<input
-						type="text"
-						class="w-full p-2 bg-transparent"
-						placeholder="Ajouter une description"
-						bind:value={info.description}
-					/>
-					<input type="text" placeholder="Ajouter un lieu" bind:value={info.place} />
-				</Popover>
 			{/each}
 			{#each emptyCases as e}
 				<div
@@ -57,7 +44,7 @@
 	<div class="flex flex-rows justify-center">
 		<button
 			on:click={() => {
-				currentDay === today ? (currentDay = 0) : currentDay++;
+				currentDay === 0 ? (currentDay = today) : currentDay--;
 			}}>left</button
 		>
 		<div class="flex flex-col border">
@@ -74,7 +61,7 @@
 		</div>
 		<button
 			on:click={() => {
-				currentDay === 0 ? (currentDay = today) : currentDay--;
+				currentDay === today ? (currentDay = 0) : currentDay++;
 			}}>right</button
 		>
 	</div>

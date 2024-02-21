@@ -38,10 +38,16 @@ export const load: PageServerLoad = async () => {
         return { user: null, cases: null };
     } else {
         while (userWithCases.cases.length < dayOfWeek) {
+            const date = new Date();
+            const diff: number = dayOfWeek - userWithCases.cases.length - 1
+            console.log(diff);
+            
+            date.setDate(date.getDate() - diff)
+            
             userWithCases.cases.push({
                 id: '',
-                date: today,
-                description: '',
+                date: date,
+                description: ``,
                 color: "FADBCD",
                 place: null,
                 photo: [],
