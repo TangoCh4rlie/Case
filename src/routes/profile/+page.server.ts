@@ -6,6 +6,11 @@ export const load: PageServerLoad = async () => {
     const dayOfWeek = today.getDay();
     const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? - 6 : 1);
     const lastMonday = new Date(today.setDate(diff));
+    lastMonday.setHours(0, 0, 0, 0);
+
+    console.log("today: ", new Date());
+    console.log("lastMonday: ", lastMonday);
+    
 
     const userWithCases = await prisma.user.findUnique({
         where: {
@@ -16,6 +21,9 @@ export const load: PageServerLoad = async () => {
             username: true,
             img: true,
             cases: {
+                orderBy: {
+                    date: 'asc'
+                },
                 where: {
                     date: {
                         gte: lastMonday,
@@ -29,7 +37,7 @@ export const load: PageServerLoad = async () => {
     if ( !userWithCases ) {
         return { user: null, cases: null };
     } else {
-        while (userWithCases.cases.length < dayOfWeek - 1) {
+        while (userWithCases.cases.length < dayOfWeek) {
             userWithCases.cases.push({
                 id: '',
                 date: today,
