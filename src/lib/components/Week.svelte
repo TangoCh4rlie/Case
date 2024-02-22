@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { PageData } from '../../routes/profile/$types';
-	import { Popover } from 'flowbite-svelte';
 	import ColorPicker from './ColorPicker.svelte';
 	import { Color, type Case } from '$lib/types/case';
 
@@ -18,6 +17,7 @@
 
 	const today = new Date().getDay() - 1;
 	let currentDay = today;
+
 </script>
 
 <div>

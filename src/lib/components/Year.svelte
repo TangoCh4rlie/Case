@@ -2,12 +2,10 @@
 	import type { Color } from '$lib/types/case';
 	import type { PageData } from '../../routes/$types';
 
-	export let data: PageData;
+	export let color;
 
 	// @ts-ignores
-	const tableOfData: {date: Date, color: Color}[] = data.color.cases;
-
-	console.log(tableOfData);
+	const tableOfData: {date: Date, color: Color}[] = color.cases;
 
 	const cases: any[] = [];
 	const mois: string[] = [
@@ -38,11 +36,7 @@
 	}
 
 	tableOfData.forEach(element => {
-		console.log(positionJourAnnee(element.date.getMonth() + 1, element.date.getDate() + 1));
-		console.log(cases[positionJourAnnee(element.date.getMonth() + 1, element.date.getDate() + 1)]);
-		
 		cases[positionJourAnnee(element.date.getMonth() + 1, element.date.getDate() + 1)].color = element.color;
-		console.log(cases[positionJourAnnee(element.date.getMonth() + 1, element.date.getDate() + 1)]);
 	});
 </script>
 
