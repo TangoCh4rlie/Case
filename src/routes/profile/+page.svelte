@@ -6,8 +6,6 @@
 	export let data: PageData;
 
 	const storeDataInBd = async (data: PageData) => {
-		console.log(data.cases);
-		
 		const res = await fetch('http://localhost:5173/api/week', {
 			method: 'POST',
 			mode: 'cors',
@@ -30,7 +28,13 @@
 	<h1>{data.user?.username}</h1>
 	<Week {data} />
 	<button on:click={() => storeDataInBd(data)}>Store data</button>
-	<Life />
+	{#await data.color}
+		<p>Loading</p>
+	{:then color} 
+		<div class="flex justify-center">
+			<Life {data}/>
+		</div>
+	{/await}
 </div>
 
 

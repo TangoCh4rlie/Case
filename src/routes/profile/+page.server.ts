@@ -8,9 +8,19 @@ export const load: PageServerLoad = async () => {
     const lastMonday = new Date(today.setDate(diff));
     lastMonday.setHours(0, 0, 0, 0);
 
-    console.log("today: ", new Date());
-    console.log("lastMonday: ", lastMonday);
-    
+    const userColorCases = await prisma.user.findUnique({
+        where: {
+            username: "JohnDoe",
+        },
+        select: {
+            cases: {
+                select: {
+                    date: true,
+                    color: true,
+                }
+            }
+        },
+    });
 
     const userWithCases = await prisma.user.findUnique({
         where: {
@@ -39,9 +49,7 @@ export const load: PageServerLoad = async () => {
     } else {
         while (userWithCases.cases.length < dayOfWeek) {
             const date = new Date();
-            const diff: number = dayOfWeek - userWithCases.cases.length - 1
-            console.log(diff);
-            
+            const diff: number = dayOfWeek - userWithCases.cases.length - 1;
             date.setDate(date.getDate() - diff)
             
             userWithCases.cases.push({
@@ -59,8 +67,12 @@ export const load: PageServerLoad = async () => {
     
         const user = {id: userWithCases.id ,username: userWithCases.username, img: userWithCases.img};
         const cases = userWithCases.cases
+        if ( !userColorCases ) {
+            return { user , cases, color: null };
+        }
+        const color = userColorCases
     
-        return { user , cases };
+        return { user , cases, color };
     }
 
     
