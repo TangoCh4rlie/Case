@@ -9,19 +9,19 @@
 
 	onMount(() => {
 		window.addEventListener('beforeunload', () => {
-			storeDataInBd(data);
+			storeDataInBd(data, window.location.origin);
 		});
 		// window.addEventListener('unload', () => {
-		// 	storeDataInBd(data);
+		// 	storeDataInBd(data, window.location.origin);
 		// });
 		// window.addEventListener('')
 
 		return () => {
 			window.removeEventListener('beforeunload', () => {
-				storeDataInBd(data);
+				storeDataInBd(data, window.location.origin);
 			});
 			// window.addEventListener('unload', () => {
-			// 	storeDataInBd(data);
+			// 	storeDataInBd(data, window.location.origin);
 			// });
 		};
 	});
@@ -29,7 +29,7 @@
 
 <div>
 	<Week {data} />
-	<button on:click={() => storeDataInBd(data)}>Store data</button>
+	<button on:click={() => storeDataInBd(data, window.location.origin)}>Store data</button>
 	{#await data.color}
 		<p>Loading</p>
 	{:then color}
