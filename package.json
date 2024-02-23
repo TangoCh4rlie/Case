@@ -13,7 +13,8 @@
 		"format": "prettier --write ."
 	},
 	"prisma": {
-		"seed": "node --loader ts-node/esm prisma/seed.ts"
+		"seed": "node --loader ts-node/esm prisma/seed.ts",
+		"postinstall": "prisma generate"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
