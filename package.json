@@ -11,7 +11,7 @@
 		"test": "vitest",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"postinstall": "prisma generate"
+		"postinstall": "prisma generate && prisma migrate dev && prisma seed"
 	},
 	"prisma": {
 		"seed": "node --loader ts-node/esm prisma/seed.ts"
