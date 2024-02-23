@@ -1,6 +1,7 @@
 import type { PageData } from "../../routes/profile/$types";
+import { url } from "./url";
 
-export const storeDataInBd = async (data: PageData, url: string) => {
+export const storeDataInBd = async (data: PageData) => {
     const res = await fetch(url + '/api/week', {
         method: 'POST',
         mode: 'cors',
