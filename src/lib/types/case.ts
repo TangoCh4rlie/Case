@@ -2,7 +2,7 @@ export type Case = {
     id: string;
     date: Date;
     description: string;
-    color: Color;
+    color: string;
     place: string | null;
     photo: string[]
     people: string[]
@@ -11,13 +11,13 @@ export type Case = {
 }
 
 export enum Color {
-    waiting = "FADBCD",
-    gray = "F0F0F0",
-    red = "FF9B9B",
-    green = "BEF388",
-    blue = "B4F6FF",
-    orange = "FFC37C",
-    pruple = "CF93FF",
-    darkblue = "AEB9FF",
-    pink = "FF8CFA"
+    default = "EBEEEE",
+    joy = "F1E813",
+    anger = "DF4545",
+    zen = "39AA3D",
+    sadness = "55B4C1",
+    lazyness = "3D4998",
+    motivated = "EF8A14",
+    love = "DA48D4",
+    anxious = "8652AE",
 }

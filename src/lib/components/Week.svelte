@@ -21,22 +21,33 @@
 </script>
 
 <div>
-	<div class="flex justify-center border">
-		<div class="grid grid-cols-7 gap-10 border">
+	<div class="flex justify-center m-6">
+		<div class="grid grid-cols-7 gap-10">
 			{#each cases as info}
-				<div
-					class="flex justify-center items-center w-20 h-20 rounded-2xl"
-					id="case-{info.id}"
-					style="background-color: #{info.color}"
-				>
-					{cases.indexOf(info)}
-					{info.description}
-				</div>
+				{#if info.id === ''}
+					<div class="case {currentDay === cases.indexOf(info) ? 'active' : ''}"
+						id="case-{info.id}"
+						style="
+							background-color: #{Color[info.color]};
+							border: 2px dashed #E02727;
+						"
+					>
+						{info.description}
+					</div>				
+				{:else}
+					<div
+						class="case {currentDay === cases.indexOf(info) ? 'active' : ''}"
+						id="case-{info.id}"
+						style="background-color: #{Color[info.color]}"
+					>
+						{info.description}
+					</div>
+				{/if}
 			{/each}
 			{#each emptyCases as e}
 				<div
 					class="flex justify-center items-center w-20 h-20 rounded-2xl"
-					style="background-color: #F0F0F0"
+					style="background-color: #{Color['default']}"
 				></div>
 			{/each}
 		</div>
@@ -66,3 +77,19 @@
 		>
 	</div>
 </div>
+
+<style>
+	.case {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 80px;
+		height: 80px;
+		border-radius: 20px;
+		transition: all 0.3s ease;
+	}
+  
+	.case.active {
+	  	transform: scale(1.3);
+	}
+  </style>

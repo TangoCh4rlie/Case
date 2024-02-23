@@ -21,6 +21,7 @@ export async function POST({ request }) {
                             color: c.color,
                         },
                         create: {
+                            date: c.date,
                             description: c.description,
                             color: c.color,
                             place: c.place,

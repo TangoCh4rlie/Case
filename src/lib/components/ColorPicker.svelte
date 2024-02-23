@@ -4,7 +4,7 @@
     import { Color } from '../types/case';
 
     const colorName = Object.keys(Color);
-	const colorValues = Object.values(Color);
+	colorName.shift()
 	
 </script>
 
@@ -12,7 +12,7 @@
 	<button>drop Down</button>
 	<Dropdown class='bg-popup'>
 		{#each colorName as colorOption}
-			<DropdownItem on:click={() => (color = colorValues[colorName.indexOf(colorOption)])}>{colorOption}</DropdownItem>
+			<DropdownItem on:click={() => (color = colorName[colorName.indexOf(colorOption)])}>{colorOption}</DropdownItem>
 		{/each}
 	</Dropdown>
 </div>

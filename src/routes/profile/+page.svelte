@@ -28,8 +28,6 @@
 </script>
 
 <div>
-	<h1>Profile</h1>
-	<h1>{data.user?.username}</h1>
 	<Week {data} />
 	<button on:click={() => storeDataInBd(data)}>Store data</button>
 	{#await data.color}

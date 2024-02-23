@@ -1,4 +1,5 @@
 import prisma from "$lib/prisma";
+import { type Case } from "$lib/types/case";
 import type { PageServerLoad } from "./$types";
 
 export const prerender = true;
@@ -24,7 +25,7 @@ export const load: PageServerLoad = async () => {
         },
     });
 
-    const userWithCases = await prisma.user.findUnique({
+    let userWithCases = await prisma.user.findUnique({
         where: {
             username: "JohnDoe",
         },
@@ -44,31 +45,16 @@ export const load: PageServerLoad = async () => {
                 }
             }
         },
-    });    
-    
+    });
+
     if ( !userWithCases ) {
         return { user: null, cases: null };
     } else {
-        while (userWithCases.cases.length < dayOfWeek) {
-            const date = new Date();
-            const diff: number = dayOfWeek - userWithCases.cases.length - 1;
-            date.setDate(date.getDate() - diff)
-            
-            userWithCases.cases.push({
-                id: '',
-                date: date,
-                description: ``,
-                color: "FADBCD",
-                place: null,
-                photo: [],
-                people: [],
-                tag: [],
-                userId: userWithCases.id
-            });
-        }
-    
-        const user = {id: userWithCases.id ,username: userWithCases.username, img: userWithCases.img};
-        const cases = userWithCases.cases
+        const user = {id: userWithCases.id ,username: userWithCases.username, img: userWithCases.img}
+
+        userWithCases = remplirDatesManquantesSemaine(userWithCases?.cases);
+
+        const cases = userWithCases
         if ( !userColorCases ) {
             return { user , cases, color: null };
         }
@@ -79,3 +65,39 @@ export const load: PageServerLoad = async () => {
 
     
 };
+
+function remplirDatesManquantesSemaine(cases: Case[]): Case[] {
+    const nbCases = new Date().getDay();
+    const finalData = new Array(nbCases === 0 ? 7 : nbCases).fill(null);
+
+    cases.forEach((c) => {
+        if (c.date.getDay() === 0)
+            finalData[6] = c;
+        else
+            finalData[c.date.getDay() - 1] = c;
+    });
+
+    let i = 0;
+    finalData.forEach((c) => {
+        if (c === null) {
+            const date = new Date();
+            const diff: number = (date.getDay() + 6) % 7 - i;
+            date.setDate(date.getDate() - diff)
+            finalData[i] = {
+                id: '',
+                date: date,
+                description: ``,
+                color: "default",
+                place: null,
+                photo: [],
+                people: [],
+                tag: [],
+                userId: ''
+            };
+        }
+        i++;
+    });
+    
+    return finalData;
+    
+}
