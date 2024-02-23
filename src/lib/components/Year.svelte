@@ -2,7 +2,8 @@
 	import { Color } from '$lib/types/case';
 
 	export let color;
-
+	console.log(color);
+	
 	// @ts-ignores
 	const tableOfData: {date: Date, color: Color}[] = color.cases;
 
@@ -23,19 +24,24 @@
 	];
 
 	function positionJourAnnee(mois: number, jour: number) {
-		const joursParMois = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // Nombre de jours dans chaque mois
-		const position = joursParMois.slice(0, mois - 1).reduce((total, jours) => total + jours, 0) + jour - 1; // Calcul de la position dans l'année
+		let position = 0;
+		for (let i = 1; i < mois; i++) {
+			position += new Date(2024, i, 0).getDate();
+		}
+		position += jour - 1;
+		console.log(position);
+		
 		return position;
 	}
 	
 
 	let i = 0;
 	while (i <= 364) {
-		cases.push({ id: i++, color: 'F0F0F0' });
+		cases.push({ id: i++, color: Color.default, date: new Date(2024, 0, i)});
 	}
 
 	tableOfData.forEach(element => {
-		cases[positionJourAnnee(element.date.getMonth() + 1, element.date.getDate() + 1)].color = element.color;
+		cases[positionJourAnnee(element.date.getMonth() + 1, element.date.getDate() + 1) - 1].color = element.color;
 	});
 </script>
 
@@ -57,7 +63,11 @@
 		</ul>
 		<ul class="squares">
 			{#each cases as i}
-				<li style="background-color: #{Color[i.color]}"></li>
+				<button 
+					on:click={() => {
+						console.log(i);
+					}} 
+					style="background-color: #{Color[i.color]}"></button>
 			{/each}
 		</ul>
 	</div>
@@ -122,7 +132,7 @@
 		visibility: hidden;
 	}
 
-	.squares li {
+	.squares button {
 		background-color: #ebedf0;
 		border-radius: 5px;
 	}
