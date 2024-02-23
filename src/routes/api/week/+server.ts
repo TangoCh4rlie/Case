@@ -39,3 +39,17 @@ export async function POST({ request }) {
         return json({ message: 'Error' });
     }
 }
+
+export async function GET({ request }) {
+    const headers = request.headers;
+    const date: string | null = headers.get('date');
+
+    console.log(date);
+    
+
+    try {
+        return json({ message: 'Success' });
+    } catch (error) {
+        return json({ message: 'Error' });
+    }
+}
