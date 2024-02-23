@@ -1,6 +1,5 @@
 <script lang="ts">
-	import type { Color } from '$lib/types/case';
-	import type { PageData } from '../../routes/$types';
+	import { Color } from '$lib/types/case';
 
 	export let color;
 
@@ -58,7 +57,7 @@
 		</ul>
 		<ul class="squares">
 			{#each cases as i}
-				<li style="background-color: #{i.color}"></li>
+				<li style="background-color: #{Color[i.color]}"></li>
 			{/each}
 		</ul>
 	</div>

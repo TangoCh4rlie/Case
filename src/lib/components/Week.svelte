@@ -25,23 +25,26 @@
 		<div class="grid grid-cols-7 gap-10">
 			{#each cases as info}
 				{#if info.id === ''}
-					<div class="case {currentDay === cases.indexOf(info) ? 'active' : ''}"
-						id="case-{info.id}"
-						style="
-							background-color: #{Color[info.color]};
-							border: 2px dashed #E02727;
-						"
-					>
-						{info.description}
-					</div>				
-				{:else}
-					<div
-						class="case {currentDay === cases.indexOf(info) ? 'active' : ''}"
+					<button class="case {currentDay === cases.indexOf(info) ? 'active' : ''} {info.color === 'default' ? 'dotted' : ''}"
 						id="case-{info.id}"
 						style="background-color: #{Color[info.color]}"
+						on:click={() => {
+							currentDay = cases.indexOf(info);
+						}}
 					>
 						{info.description}
-					</div>
+					</button>				
+				{:else}
+					<button
+						class="case {currentDay === cases.indexOf(info) ? 'active' : ''} {info.color === 'default' ? 'dotted' : ''}"
+						id="case-{info.id}"
+						style="background-color: #{Color[info.color]}"
+						on:click={() => {
+							currentDay = cases.indexOf(info);
+						}}
+					>
+						{info.description}
+					</button>
 				{/if}
 			{/each}
 			{#each emptyCases as e}
@@ -88,8 +91,12 @@
 		border-radius: 20px;
 		transition: all 0.3s ease;
 	}
+
+	.case.dotted {
+		border: 2px dashed #E02727;
+	}
   
 	.case.active {
-	  	transform: scale(1.3);
+	  	transform: scale(1.25);
 	}
   </style>
