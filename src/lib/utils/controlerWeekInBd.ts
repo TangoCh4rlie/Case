@@ -1,3 +1,4 @@
+import type { Case } from "$lib/types/case";
 import type { PageData } from "../../routes/profile/$types";
 // import { url } from "../server/url";
 
@@ -16,17 +17,15 @@ export const storeDataInBd = async (data: PageData) => {
     });
 };
 
-export const getWeek = async (date: Date) => {
-    const res = await fetch(import.meta.env.VITE_URL + `/api/week?date=${date}`, {
+export const getWeek = async (date: Date): Promise<Case[]> => {
+    const res = await fetch(import.meta.env.VITE_URL + `/api/week/${date.toISOString()}`, {
         method: 'GET',
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Headers': 'Accept',
-            'Date': date.toLocaleDateString(),
         },
     });
-
-    const json = await res.json();
-    console.log(json);
+    const data = await res.json();
+    return data.cases;
 }

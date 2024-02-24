@@ -4,40 +4,50 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import { getWeek, storeDataInBd } from '$lib/utils/controlerWeekInBd';
+	import type { Case } from '$lib/types/case';
 
 	export let data: PageData;
+	$: newdata = data;
+	
 
 	onMount(() => {
 		window.addEventListener('beforeunload', () => {
-			storeDataInBd(data);
+			storeDataInBd(newdata);
 		});
 		// window.addEventListener('unload', () => {
-		// 	storeDataInBd(data, window.location.origin);
+		// 	storeDataInBd(newdata, window.location.origin);
 		// });
 		// window.addEventListener('')
 
 		return () => {
 			window.removeEventListener('beforeunload', () => {
-				storeDataInBd(data);
+				storeDataInBd(newdata);
 			});
 			// window.addEventListener('unload', () => {
-			// 	storeDataInBd(data, window.location.origin);
+			// 	storeDataInBd(newdata, window.location.origin);
 			// });
 		};
 	});
 
-	const changeWeek = (date: Date) => {
-		storeDataInBd(data);
-		getWeek(date);
+	const changeWeek = async (date: Date) => {
+		storeDataInBd(newdata);
+		newdata.cases = [await getWeek(date)].map(caseData => ({
+			id: caseData.id,
+			date: caseData.date,
+			description: caseData.description,
+			color: caseData.color,
+			// Add other required properties here
+		}));
+		
 	};
 
 
 </script>
 
 <div>
-	<Week {data} />
-	<button on:click={() => storeDataInBd(data)}>Store data</button>
-	{#await data.color}
+	<Week {newdata} />
+	<button on:click={() => storeDataInBd(newdata)}>Store newdata</button>
+	{#await newdata.color}
 		<p>Loading</p>
 	{:then color}
 		<div class="flex justify-center">

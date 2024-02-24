@@ -3,9 +3,10 @@
 	import ColorPicker from './ColorPicker.svelte';
 	import { Color, type Case } from '$lib/types/case';
 
-	export let data: PageData;
+	export let newdata: PageData;
+	
 	// @ts-ignore
-	const cases: Case[] = data.cases;
+	const cases: Case[] = newdata.cases;
 
 	const emptyCases: string[] = [];
 	const lenghtCases = cases.length;
@@ -43,6 +44,7 @@
 							currentDay = cases.indexOf(info);
 						}}
 					>
+						{info.date.toLocaleDateString()}
 						{info.description}
 					</button>
 				{/if}

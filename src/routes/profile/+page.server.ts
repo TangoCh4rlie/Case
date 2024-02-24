@@ -25,7 +25,7 @@ export const load: PageServerLoad = async () => {
         },
     });
 
-    let userWithCases = await prisma.user.findUnique({
+    const userWithCases = await prisma.user.findUnique({
         where: {
             username: "JohnDoe",
         },
@@ -52,9 +52,9 @@ export const load: PageServerLoad = async () => {
     } else {
         const user = {id: userWithCases.id ,username: userWithCases.username, img: userWithCases.img}
 
-        userWithCases = remplirDatesManquantesSemaine(userWithCases?.cases);
+        const casesWeek: Case[] = remplirDatesManquantesSemaine(userWithCases?.cases);
 
-        const cases = userWithCases
+        const cases = casesWeek
         if ( !userColorCases ) {
             return { user , cases, color: null };
         }
@@ -62,8 +62,6 @@ export const load: PageServerLoad = async () => {
     
         return { user , cases, color };
     }
-
-    
 };
 
 function remplirDatesManquantesSemaine(cases: Case[]): Case[] {

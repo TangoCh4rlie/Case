@@ -30,8 +30,6 @@
 			position += new Date(2024, i, 0).getDate();
 		}
 		position += jour - 1;
-		console.log(position);
-		
 		return position;
 	}
 	
@@ -58,13 +56,13 @@
 			{/each}
 		</ul>
 		<ul class="days">
-			<li>Dim</li>
 			<li>Lun</li>
 			<li>Mar</li>
 			<li>Mer</li>
 			<li>Jeu</li>
 			<li>Ven</li>
 			<li>Sam</li>
+			<li>Dim</li>
 		</ul>
 		<ul class="squares">
 			{#each cases as i}
@@ -133,7 +131,7 @@
 		grid-auto-columns: var(--square-size);
 	}
 
-	.days li:nth-child(odd) {
+	.days li:nth-child(even) {
 		visibility: hidden;
 	}
 
