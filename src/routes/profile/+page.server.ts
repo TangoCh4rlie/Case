@@ -1,6 +1,6 @@
 import prisma from "$lib/prisma";
 import { type Case } from "$lib/types/case";
-import { remplirDatesManquantesSemaine } from "$lib/utils/manipulateWeek";
+import { remplirDatesManquantesSemaineActuelle } from "$lib/utils/manipulateWeek";
 import type { PageServerLoad } from "./$types";
 
 export const prerender = true;
@@ -53,7 +53,7 @@ export const load: PageServerLoad = async () => {
     } else {
         const user = {id: userWithCases.id ,username: userWithCases.username, img: userWithCases.img}
 
-        const casesWeek: Case[] = remplirDatesManquantesSemaine(userWithCases?.cases);
+        const casesWeek: Case[] = remplirDatesManquantesSemaineActuelle(userWithCases?.cases);
 
         const cases = casesWeek
         if ( !userColorCases ) {
