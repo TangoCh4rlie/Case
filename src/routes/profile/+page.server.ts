@@ -1,5 +1,7 @@
 import prisma from "$lib/prisma";
 import { type Case } from "$lib/types/case";
+import { remplirDatesManquantesSemainePrecedente } from "$lib/utils/manipulateWeek";
+import moment from "moment";
 import type { PageServerLoad } from "./$types";
 
 export const prerender = true;
@@ -25,7 +27,7 @@ export const load: PageServerLoad = async () => {
         },
     });
 
-    let userWithCases = await prisma.user.findUnique({
+    const userWithCases = await prisma.user.findUnique({
         where: {
             username: "JohnDoe",
         },
@@ -52,52 +54,14 @@ export const load: PageServerLoad = async () => {
     } else {
         const user = {id: userWithCases.id ,username: userWithCases.username, img: userWithCases.img}
 
-        userWithCases = remplirDatesManquantesSemaine(userWithCases?.cases);
+        const casesWeek: Case[] = remplirDatesManquantesSemainePrecedente(userWithCases?.cases, moment().toDate());
 
-        const cases = userWithCases
+        const cases = casesWeek
         if ( !userColorCases ) {
             return { user , cases, color: null };
         }
         const color = userColorCases
-    
+        
         return { user , cases, color };
     }
-
-    
 };
-
-function remplirDatesManquantesSemaine(cases: Case[]): Case[] {
-    const nbCases = new Date().getDay();
-    const finalData = new Array(nbCases === 0 ? 7 : nbCases).fill(null);
-
-    cases.forEach((c) => {
-        if (c.date.getDay() === 0)
-            finalData[6] = c;
-        else
-            finalData[c.date.getDay() - 1] = c;
-    });
-
-    let i = 0;
-    finalData.forEach((c) => {
-        if (c === null) {
-            const date = new Date();
-            const diff: number = (date.getDay() + 6) % 7 - i;
-            date.setDate(date.getDate() - diff)
-            finalData[i] = {
-                id: '',
-                date: date,
-                description: ``,
-                color: "default",
-                place: null,
-                photo: [],
-                people: [],
-                tag: [],
-                userId: ''
-            };
-        }
-        i++;
-    });
-    
-    return finalData;
-    
-}

@@ -46,6 +46,7 @@
 		"@fullhuman/postcss-purgecss": "^5.0.0",
 		"@prisma/client": "^5.9.1",
 		"dotenv": "^16.4.5",
-		"flowbite-svelte": "^0.44.23"
+		"flowbite-svelte": "^0.44.23",
+		"moment": "^2.30.1"
 	}
 }

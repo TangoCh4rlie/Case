@@ -21,7 +21,7 @@ model User {
 
 model Case {
   id          String   @id @default(uuid())
-  date        DateTime @default(now())
+  date        DateTime @default(now()) @unique
   description String
   color       String    @default("default")
   place       String?

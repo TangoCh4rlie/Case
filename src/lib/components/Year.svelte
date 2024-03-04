@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { Color } from '$lib/types/case';
+	import { createEventDispatcher } from 'svelte';
 
+	const dispatch = createEventDispatcher();
 	export let color;
-	console.log(color);
 	
 	// @ts-ignores
 	const tableOfData: {date: Date, color: Color}[] = color.cases;
@@ -29,20 +30,22 @@
 			position += new Date(2024, i, 0).getDate();
 		}
 		position += jour - 1;
-		console.log(position);
-		
 		return position;
 	}
 	
 
 	let i = 0;
-	while (i <= 364) {
+	while (i <= 365) {
 		cases.push({ id: i++, color: Color.default, date: new Date(2024, 0, i)});
 	}
 
 	tableOfData.forEach(element => {
 		cases[positionJourAnnee(element.date.getMonth() + 1, element.date.getDate() + 1) - 1].color = element.color;
 	});
+
+	const triggerEventStoreData = (date: Date) => {
+		dispatch('storeData', date);
+	};
 </script>
 
 <div class="flex flex-col">
@@ -53,19 +56,19 @@
 			{/each}
 		</ul>
 		<ul class="days">
-			<li>Dim</li>
 			<li>Lun</li>
 			<li>Mar</li>
 			<li>Mer</li>
 			<li>Jeu</li>
 			<li>Ven</li>
 			<li>Sam</li>
+			<li>Dim</li>
 		</ul>
 		<ul class="squares">
 			{#each cases as i}
 				<button 
 					on:click={() => {
-						console.log(i);
+						triggerEventStoreData(i.date);
 					}} 
 					style="background-color: #{Color[i.color]}"></button>
 			{/each}
@@ -128,7 +131,7 @@
 		grid-auto-columns: var(--square-size);
 	}
 
-	.days li:nth-child(odd) {
+	.days li:nth-child(even) {
 		visibility: hidden;
 	}
 
