@@ -6,21 +6,12 @@
 	export let newdata: PageData;
 	$: cases = newdata.cases ? newdata.cases : [];
 	
-	// const emptyCases: string[] = [];
-	// const lengthCases = newdata.cases ? newdata.cases.length : 0;
-
-	// //remplir les cases avec des cases vide
-	// while (lengthCases + emptyCases.length < 7) {
-	// 	emptyCases.push('emptyCase');
-	// }
-
 	const today = new Date().getDay() - 1;
 	let currentDay = today;
 
 </script>
 
 <div>
-	{currentDay}
 	<div class="flex justify-center m-6">
 		<div class="grid grid-cols-7 gap-10">
 			{#each cases as info}
@@ -42,9 +33,7 @@
 							on:click={() => {
 								currentDay = cases.indexOf(info);
 							}}
-						>
-							{info.description}
-						</button>
+						/>
 					{/if}		
 				{:else}
 					<button
@@ -68,18 +57,22 @@
 			}}>left</button
 		>
 		<div class="flex flex-col border">
-			<div class="flex flex-row ">
-				<!-- {#if newdata.cases}
-					<div>Journée du {newdata.cases[currentDay].date}</div>
-				{/if} -->
-				<ColorPicker bind:color={cases[currentDay].color} />
-			</div>
-			<input
-				type="text"
-				class="w-full p-2 bg-transparent"
-				placeholder="Ajouter une description"
-				bind:value={cases[currentDay].description}
-			/>
+			{#if newdata.cases}
+				{#if new Date(newdata.cases[currentDay].date).getTime() >= new Date().getTime()}
+					<p>Impossible de mofier ce jour</p>	
+				{:else}
+					<div class="flex flex-row ">
+						<div>Journée du {new Date(newdata.cases[currentDay].date).toLocaleDateString()}</div>
+						<ColorPicker bind:color={cases[currentDay].color} />
+					</div>
+					<input
+						type="text"
+						class="w-full p-2 bg-transparent"
+						placeholder="Ajouter une description"
+						bind:value={cases[currentDay].description}
+					/>
+				{/if}
+			{/if}
 		</div>
 		<button
 			on:click={() => {

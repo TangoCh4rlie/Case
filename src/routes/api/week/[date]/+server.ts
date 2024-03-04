@@ -6,8 +6,6 @@ import moment from 'moment';
 
 export async function GET({ params }) {
     const date = moment(params.date);
-
-    console.log("dateclické", date);
     
     const monday = moment(date);
     const sunday = moment(date);
