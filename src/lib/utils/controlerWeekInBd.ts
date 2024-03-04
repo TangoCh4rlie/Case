@@ -32,8 +32,6 @@ export const getWeek = async (date: Date): Promise<Case[]> => {
             'Access-Control-Allow-Headers': 'Accept',
         },
     });
-    const data = await res.json();
-    console.log(data);
-    
+    const data = await res.json();    
     return data.cases;
 }
