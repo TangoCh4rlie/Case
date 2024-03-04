@@ -4,15 +4,13 @@
 	import { Color, type Case } from '$lib/types/case';
 
 	export let newdata: PageData;
+	$: cases = newdata.cases ? newdata.cases : [];
 	
-	// @ts-ignore
-	const cases: Case[] = newdata.cases;
-
 	const emptyCases: string[] = [];
-	const lenghtCases = cases.length;
+	const lengthCases = newdata.cases ? newdata.cases.length : 0;
 
 	//remplir les cases avec des cases vide
-	while (lenghtCases + emptyCases.length < 7) {
+	while (lengthCases + emptyCases.length < 7) {
 		emptyCases.push('emptyCase');
 	}
 
@@ -22,6 +20,7 @@
 </script>
 
 <div>
+	<button on:click={() => {console.log(newdata.cases)}}>test</button>
 	<div class="flex justify-center m-6">
 		<div class="grid grid-cols-7 gap-10">
 			{#each cases as info}
@@ -44,7 +43,7 @@
 							currentDay = cases.indexOf(info);
 						}}
 					>
-						{info.date.toLocaleDateString()}
+						<!-- {info.date.toLocaleDateString()} -->
 						{info.description}
 					</button>
 				{/if}
@@ -65,7 +64,7 @@
 		>
 		<div class="flex flex-col border">
 			<div class="flex flex-row ">
-				<div>Journée du {cases[currentDay].date.toLocaleDateString()}</div>
+				<!-- <div>Journée du {newdata.cases[currentDay].date.toLocaleDateString()}</div> -->
 				<ColorPicker bind:color={cases[currentDay].color} />
 			</div>
 			<input

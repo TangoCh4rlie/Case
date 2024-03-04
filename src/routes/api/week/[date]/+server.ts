@@ -1,4 +1,6 @@
 import prisma from '$lib/prisma.js';
+import type { Case } from '$lib/types/case';
+import { remplirDatesManquantesSemaine } from '$lib/utils/manipulateWeek';
 import { json } from '@sveltejs/kit';
 
 export async function GET({ params }) {
@@ -23,7 +25,15 @@ export async function GET({ params }) {
                 }
             }
         },
-    })
+    });
+
+    console.log(data?.cases);
     
-    return json({cases: data?.cases});
+
+    if (!data) {
+        return json({cases: remplirDatesManquantesSemaine([])});
+    } else {
+        const casesWeek: Case[] = remplirDatesManquantesSemaine(data?.cases);
+        return json({cases: casesWeek});
+    }
 }

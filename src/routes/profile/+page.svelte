@@ -4,40 +4,34 @@
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import { getWeek, storeDataInBd } from '$lib/utils/controlerWeekInBd';
-	import type { Case } from '$lib/types/case';
 
 	export let data: PageData;
 	$: newdata = data;
 	
 
-	onMount(() => {
-		window.addEventListener('beforeunload', () => {
-			storeDataInBd(newdata);
-		});
-		// window.addEventListener('unload', () => {
-		// 	storeDataInBd(newdata, window.location.origin);
-		// });
-		// window.addEventListener('')
+	// onMount(() => {
+	// 	window.addEventListener('beforeunload', () => {
+	// 		storeDataInBd(newdata);
+	// 	});
+	// 	// window.addEventListener('unload', () => {
+	// 	// 	storeDataInBd(newdata, window.location.origin);
+	// 	// });
+	// 	// window.addEventListener('')
 
-		return () => {
-			window.removeEventListener('beforeunload', () => {
-				storeDataInBd(newdata);
-			});
-			// window.addEventListener('unload', () => {
-			// 	storeDataInBd(newdata, window.location.origin);
-			// });
-		};
-	});
+	// 	return () => {
+	// 		window.removeEventListener('beforeunload', () => {
+	// 			storeDataInBd(newdata);
+	// 		});
+	// 		// window.addEventListener('unload', () => {
+	// 		// 	storeDataInBd(newdata, window.location.origin);
+	// 		// });
+	// 	};
+	// });
 
 	const changeWeek = async (date: Date) => {
 		storeDataInBd(newdata);
-		newdata.cases = [await getWeek(date)].map(caseData => ({
-			id: caseData.id,
-			date: caseData.date,
-			description: caseData.description,
-			color: caseData.color,
-			// Add other required properties here
-		}));
+		newdata.cases = await getWeek(date);
+		console.log(newdata.cases);
 		
 	};
 
