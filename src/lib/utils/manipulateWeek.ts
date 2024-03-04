@@ -50,6 +50,7 @@ export function remplirDatesManquantesSemainePrecedente(cases: Case[], dateParam
             finalData[c.date.getDay() - 1] = c;
     });
 
+
     finalData.forEach((c) => {
         if (c === null) {
             finalData[finalData.indexOf(c)] = {
