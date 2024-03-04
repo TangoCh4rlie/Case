@@ -4,11 +4,11 @@ export function remplirDatesManquantesSemaine(cases: Case[]): Case[] {
     const nbCases = new Date().getDay();
     const finalData = new Array(nbCases === 0 ? 7 : nbCases).fill(null);
 
-    console.log(cases);
+    console.log({cases});
     
 
     cases.forEach((c) => {
-        if (c.date.getDay() === 0)
+        if (c.date.getDay() === undefined || c.date.getDay() === 0)
             finalData[6] = c;
         else
             finalData[c.date.getDay() - 1] = c;
@@ -34,6 +34,8 @@ export function remplirDatesManquantesSemaine(cases: Case[]): Case[] {
         }
         i++;
     });
+
+    console.log({finalData});
     
     return finalData;
     

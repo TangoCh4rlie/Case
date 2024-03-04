@@ -29,7 +29,7 @@
 	// });
 
 	const changeWeek = async (date: Date) => {
-		storeDataInBd(newdata);
+		// storeDataInBd(newdata);
 		newdata.cases = await getWeek(date);
 		console.log(newdata.cases);
 		

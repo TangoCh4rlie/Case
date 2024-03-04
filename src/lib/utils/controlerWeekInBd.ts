@@ -18,6 +18,8 @@ export const storeDataInBd = async (data: PageData) => {
 };
 
 export const getWeek = async (date: Date): Promise<Case[]> => {
+    console.log(date.toISOString());
+    
     const res = await fetch(import.meta.env.VITE_URL + `/api/week/${date.toISOString()}`, {
         method: 'GET',
         mode: 'cors',

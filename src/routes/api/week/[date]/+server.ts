@@ -5,6 +5,7 @@ import { json } from '@sveltejs/kit';
 
 export async function GET({ params }) {
     const date: Date = new Date(params.date);
+    
     const monday = new Date(date); monday.setDate(date.getDate() - date.getDay() + 2);
     const sunday = new Date(date); sunday.setDate(date.getDate() - date.getDay() + 8);
 
@@ -18,6 +19,7 @@ export async function GET({ params }) {
                     date: 'asc'
                 },
                 where: {
+
                     date: {
                         gte: monday,
                         lte: sunday
@@ -27,7 +29,7 @@ export async function GET({ params }) {
         },
     });
 
-    console.log(data?.cases);
+    // console.log(data?.cases);
     
 
     if (!data) {
