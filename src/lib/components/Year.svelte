@@ -35,7 +35,7 @@
 	
 
 	let i = 0;
-	while (i <= 364) {
+	while (i <= 365) {
 		cases.push({ id: i++, color: Color.default, date: new Date(2024, 0, i)});
 	}
 
