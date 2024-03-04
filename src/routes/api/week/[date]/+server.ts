@@ -2,24 +2,23 @@ import prisma from '$lib/prisma.js';
 import type { Case } from '$lib/types/case';
 import { remplirDatesManquantesSemainePrecedente } from '$lib/utils/manipulateWeek';
 import { json } from '@sveltejs/kit';
+import moment from 'moment';
 
 export async function GET({ params }) {
-    const date: Date = new Date(params.date);
+    const date = moment(params.date);
 
     console.log("dateclické", date);
     
-    const monday = new Date(date);
-    monday.setDate(date.getDate() - date.getDay() + 2);
-    monday.setHours(-23, 0, 0, 0);
-
-    const sunday = new Date(date);
-    sunday.setDate(date.getDate() - date.getDay() + 8)
-    sunday.setHours(0, 59, 59, 999);
+    const monday = moment(date);
+    const sunday = moment(date);
     
-
-    console.log("monday", monday);
-    console.log("sunday", sunday);
-    
+    if (monday.day() === 0) {
+        monday.day(-6).hour(0).minute(0).second(0);
+        sunday.day(0).hour(23).minute(59).second(59);
+    } else {
+        monday.day(1).hour(0).minute(0).second(0);
+        sunday.day(7).hour(23).minute(59).second(59);
+    }
 
     const data = await prisma.user.findUnique({
         where: {
@@ -33,8 +32,8 @@ export async function GET({ params }) {
                 where: {
 
                     date: {
-                        gte: monday,
-                        lte: sunday
+                        gte: monday.toDate(),
+                        lte: sunday.toDate()
                     }
                 }
             }
@@ -42,9 +41,9 @@ export async function GET({ params }) {
     });
 
     if (!data) {
-        return json({cases: remplirDatesManquantesSemainePrecedente([], monday)});
+        return json({cases: remplirDatesManquantesSemainePrecedente([], monday.toDate())});
     } else {
-        const casesWeek: Case[] = remplirDatesManquantesSemainePrecedente(data?.cases, monday);
+        const casesWeek: Case[] = remplirDatesManquantesSemainePrecedente(data?.cases, monday.toDate());
         return json({cases: casesWeek});
     }
 }

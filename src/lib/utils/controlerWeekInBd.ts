@@ -23,7 +23,7 @@ export const getWeek = async (date: Date): Promise<Case[]> => {
     const month: string = (date.getMonth() + 1) - 9 <= 0 ? (date.getMonth() + 1).toString() : '0' + (date.getMonth() + 1).toString();
     const year: string = date.getFullYear().toString();
     const dateToString: string = `${year}-${month}-${day}`;
-    
+
     const res = await fetch(import.meta.env.VITE_URL + `/api/week/${dateToString}`, {
         method: 'GET',
         mode: 'cors',
@@ -33,5 +33,7 @@ export const getWeek = async (date: Date): Promise<Case[]> => {
         },
     });
     const data = await res.json();
+    console.log(data);
+    
     return data.cases;
 }

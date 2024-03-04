@@ -1,4 +1,5 @@
 import type { Case } from "$lib/types/case";
+import moment from "moment";
 
 export function remplirDatesManquantesSemaineActuelle(cases: Case[]): Case[] {
     // Récupère numéro du jour dans la semaine
@@ -38,9 +39,10 @@ export function remplirDatesManquantesSemaineActuelle(cases: Case[]): Case[] {
     return finalData;
 }
 
-export function remplirDatesManquantesSemainePrecedente(cases: Case[], date: Date): Case[] {
+export function remplirDatesManquantesSemainePrecedente(cases: Case[], dateParam: Date): Case[] {
     const finalData = new Array(7).fill(null);
-
+    const date = moment(dateParam)
+    
     cases.forEach((c) => {
         if (c.date.getDay() === 0)
             finalData[6] = c;
@@ -48,12 +50,14 @@ export function remplirDatesManquantesSemainePrecedente(cases: Case[], date: Dat
             finalData[c.date.getDay() - 1] = c;
     });
 
+
+    let i = 0;
     finalData.forEach((c) => {
         if (c === null) {
             console.log("date", date);
             finalData[finalData.indexOf(c)] = {
                 id: '',
-                date: new Date(date.setDate(date.getDate() + 1)),
+                date: date.weekday(i).toDate(),
                 description: ``,
                 color: "default",
                 place: null,
@@ -63,11 +67,11 @@ export function remplirDatesManquantesSemainePrecedente(cases: Case[], date: Dat
                 userId: ''
             };
         }
+        i++;
     });
 
-    // console.log("finalData", finalData);
-    
+    console.log("finalData", finalData);
 
-    return cases;
+    return finalData;
     
 }
