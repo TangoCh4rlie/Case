@@ -1,48 +1,48 @@
 import type { Case } from "$lib/types/case";
 import moment from "moment";
 
-export function remplirDatesManquantesSemaineActuelle(cases: Case[]): Case[] {
-    // Récupère numéro du jour dans la semaine
-    const nbCases = new Date().getDay();
-    // Crée un tableau de nbCases cases avec des valeurs null
-    const finalData = new Array(nbCases === 0 ? 7 : nbCases).fill(null);
+// export function remplirDatesManquantesSemaineActuelle(cases: Case[]): Case[] {
+//     // Récupère numéro du jour dans la semaine
+//     const nbCases = new Date().getDay();
+//     // Crée un tableau de nbCases cases avec des valeurs null
+//     const finalData = new Array(nbCases === 0 ? 7 : nbCases).fill(null);
 
-    // place les cases dans le tableau finalData au bon index
-    cases.forEach((c) => {
-        if (c.date.getDay() === 0)
-            finalData[6] = c;
-        else
-            finalData[c.date.getDay() - 1] = c;
-    });
+//     // place les cases dans le tableau finalData au bon index
+//     cases.forEach((c) => {
+//         if (c.date.getDay() === 0)
+//             finalData[6] = c;
+//         else
+//             finalData[c.date.getDay() - 1] = c;
+//     });
 
-    let i = 0;
-    finalData.forEach((c) => {
-        if (c === null) {
-            const date = new Date();
-            const diff: number = (date.getDay() + 6) % 7 - i;
-            date.setDate(date.getDate() - diff)
-            finalData[i] = {
-                id: '',
-                date: date,
-                description: ``,
-                color: "default",
-                place: null,
-                photo: [],
-                people: [],
-                tag: [],
-                userId: ''
-            };
-        }
-        i++;
-    });
+//     let i = 0;
+//     finalData.forEach((c) => {
+//         if (c === null) {
+//             const date = new Date();
+//             const diff: number = (date.getDay() + 6) % 7 - i;
+//             date.setDate(date.getDate() - diff)
+//             finalData[i] = {
+//                 id: '',
+//                 date: date,
+//                 description: ``,
+//                 color: "default",
+//                 place: null,
+//                 photo: [],
+//                 people: [],
+//                 tag: [],
+//                 userId: ''
+//             };
+//         }
+//         i++;
+//     });
 
-    return finalData;
-}
+//     return finalData;
+// }
 
 export function remplirDatesManquantesSemainePrecedente(cases: Case[], dateParam: Date): Case[] {
     const finalData = new Array(7).fill(null);
     const date = moment(dateParam)
-    
+
     cases.forEach((c) => {
         if (c.date.getDay() === 0)
             finalData[6] = c;
@@ -50,14 +50,12 @@ export function remplirDatesManquantesSemainePrecedente(cases: Case[], dateParam
             finalData[c.date.getDay() - 1] = c;
     });
 
-
-    let i = 0;
     finalData.forEach((c) => {
         if (c === null) {
-            console.log("date", date);
             finalData[finalData.indexOf(c)] = {
                 id: '',
-                date: date.weekday(i).toDate(),
+                // Ca marche mais ca bug de fou je sais pas pk????
+                date: date.add(1, 'days').toDate(),
                 description: ``,
                 color: "default",
                 place: null,
@@ -66,11 +64,12 @@ export function remplirDatesManquantesSemainePrecedente(cases: Case[], dateParam
                 tag: [],
                 userId: ''
             };
+        } else {
+            date.add(1, 'days').toDate()
         }
-        i++;
     });
 
-    console.log("finalData", finalData);
+    // console.log("finalData", finalData);
 
     return finalData;
     

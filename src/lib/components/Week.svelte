@@ -43,7 +43,6 @@
 							currentDay = cases.indexOf(info);
 						}}
 					>
-						<!-- {info.date.toLocaleDateString()} -->
 						{info.description}
 					</button>
 				{/if}
@@ -64,7 +63,7 @@
 		>
 		<div class="flex flex-col border">
 			<div class="flex flex-row ">
-				<!-- <div>Journée du {newdata.cases[currentDay].date.toLocaleDateString()}</div> -->
+				<div>Journée du {newdata.cases[currentDay].date}</div>
 				<ColorPicker bind:color={cases[currentDay].color} />
 			</div>
 			<input
