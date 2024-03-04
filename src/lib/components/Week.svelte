@@ -25,7 +25,7 @@
 		<div class="grid grid-cols-7 gap-10">
 			{#each cases as info}
 				{#if info.id === '' }
-					{#if info.date.getTime() <= new Date().getTime()}
+					{#if new Date(info.date).getTime() <= new Date().getTime()}
 						<button class="case {currentDay === cases.indexOf(info) ? 'active' : ''} {info.color === 'default' ? 'dotted' : ''}"
 							id="case-{info.id}"
 							style="background-color: #{Color[info.color]}"
