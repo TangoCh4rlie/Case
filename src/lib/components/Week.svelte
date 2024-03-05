@@ -2,12 +2,12 @@
 	import type { PageData } from '../../routes/profile/$types';
 	import ColorPicker from './ColorPicker.svelte';
 	import { Color } from '$lib/types/case';
+	import moment from 'moment';
 
 	export let newdata: PageData;
+	export let selectedDate: Date;
 	$: cases = newdata.cases ? newdata.cases : [];
-	
-	const today = new Date().getDay() - 1;
-	let currentDay = today;
+	$:currentDay = selectedDate.getDay() === 0 ? 6 : selectedDate.getDay() - 1;
 
 </script>
 
@@ -26,6 +26,16 @@
 						>
 							{info.description}
 						</button>
+					<!-- {:else if moment(info.date).format('YYYY MM DD') == moment().format('YYYY MM DD')}
+						<button class="case {currentDay === cases.indexOf(info) ? 'active' : ''} today"
+							id="case-{info.id}"
+							style="background-color: #{Color[info.color]}"
+							on:click={() => {
+								currentDay = cases.indexOf(info);
+							}}
+						>
+							{info.description}
+						</button> -->
 					{:else}
 						<button class="case {currentDay === cases.indexOf(info) ? 'active' : ''}"
 							id="case-{info.id}"
@@ -100,4 +110,8 @@
 	.case.active {
 	  	transform: scale(1.25);
 	}
+/* 
+	.case.today {
+		border: 2px dashed #ff0000
+	} */
   </style>
