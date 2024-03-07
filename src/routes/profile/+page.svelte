@@ -9,12 +9,6 @@
 	$: newdata = data;
 	let selectedDate = new Date();
 
-	console.log({data});
-	console.log(data.user?.name);
-	
-	
-	
-
 	// onMount(() => {
 	// 	window.addEventListener('beforeunload', () => {
 	// 		storeDataInBd(newdata);
