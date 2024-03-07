@@ -4,5 +4,5 @@
 
 <div >
 	<a href="/profile">Profile</a>
-	<a href="/signin">Signin</a>
+	<a href="/test">Signin</a>
 </div>

@@ -44,9 +44,10 @@
 	"type": "module",
 	"dependencies": {
 		"@auth/core": "^0.28.0",
+		"@auth/prisma-adapter": "^1.5.0",
 		"@auth/sveltekit": "^0.14.0",
 		"@fullhuman/postcss-purgecss": "^5.0.0",
-		"@prisma/client": "^5.9.1",
+		"@prisma/client": "^5.10.2",
 		"dotenv": "^16.4.5",
 		"flowbite-svelte": "^0.44.23",
 		"moment": "^2.30.1"
