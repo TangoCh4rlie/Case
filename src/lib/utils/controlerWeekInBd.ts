@@ -1,6 +1,5 @@
 import type { Case } from "$lib/types/case";
 import type { PageData } from "../../routes/profile/$types";
-// import { url } from "../server/url";
 
 export const storeDataInBd = async (data: PageData) => {
     await fetch(import.meta.env.VITE_URL + '/api/week', {
