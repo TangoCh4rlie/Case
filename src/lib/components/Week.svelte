@@ -2,7 +2,6 @@
 	import type { PageData } from '../../routes/profile/$types';
 	import ColorPicker from './ColorPicker.svelte';
 	import { Color } from '$lib/types/case';
-	import moment from 'moment';
 
 	export let newdata: PageData;
 	export let selectedDate: Date;

@@ -2,6 +2,9 @@
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
+    fontFamily: {
+      poppins: ['Poppins', 'sans-serif'],
+    },
     colors: {
       'case': {
         gray: "F0F0F0",

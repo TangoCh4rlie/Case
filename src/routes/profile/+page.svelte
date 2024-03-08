@@ -7,7 +7,7 @@
 
 	export let data: PageData;
 	$: newdata = data;
-
+	
 	let selectedDate = new Date();
 
 	// onMount(() => {
