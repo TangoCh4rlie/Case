@@ -5,7 +5,7 @@ import { json } from '@sveltejs/kit';
 import moment from 'moment';
 
 export async function GET({ params }) {
-    const date = moment(params.date);
+    const date = moment(params.date, "YYYY-M-D");
     const user = params.user;
     
     const monday = moment(date).startOf('isoWeek');
