@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { Color } from '$lib/types/case';
+	import { Color, type Case } from '$lib/types/case';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
-	export let color;
+	export let cases;
 	
 	// @ts-ignores
-	const tableOfData: {date: Date, color: Color}[] = color.cases;
+	const tableOfData: Case[] = cases;
 
-	const cases: any[] = [];
+	const casesToDisplay: any[] = [];
 	const mois: string[] = [
 		'Janv',
 		'Févr',
@@ -36,11 +36,11 @@
 
 	let i = 0;
 	while (i <= 365) {
-		cases.push({ id: i++, color: Color.default, date: new Date(2024, 0, i)});
+		casesToDisplay.push({ id: i++, color: Color.default, date: new Date(2024, 0, i)});
 	}
 
 	tableOfData.forEach(element => {
-		cases[positionJourAnnee(element.date.getMonth() + 1, element.date.getDate() + 1) - 1].color = element.color;
+		casesToDisplay[positionJourAnnee(element.date.getMonth() + 1, element.date.getDate() + 1) - 1].color = element.color;
 	});
 
 	const triggerEventStoreData = (date: Date) => {
@@ -65,7 +65,7 @@
 			<li>Dim</li>
 		</ul>
 		<ul class="squares">
-			{#each cases as i}
+			{#each casesToDisplay as i}
 				<button 
 					on:click={() => {
 						triggerEventStoreData(i.date);

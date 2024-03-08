@@ -7,6 +7,7 @@
 
 	export let data: PageData;
 	$: newdata = data;
+
 	let selectedDate = new Date();
 
 	// onMount(() => {
@@ -30,8 +31,7 @@
 
 	const changeWeek = async (date: Date) => {
 		// storeDataInBd(newdata);
-		newdata.cases = await getWeek(date, data.user?.name);
-		
+		newdata.week = await getWeek(date, data.user?.name as string);
 	};
 
 
@@ -40,14 +40,11 @@
 <div>
 	<Week {newdata} {selectedDate} />
 	<button on:click={() => storeDataInBd(newdata)}>Store newdata</button>
-	{#await newdata.color}
-		<p>Loading</p>
-	{:then color}
-		<div class="flex justify-center">
-			<Year on:storeData={async ({ detail: date }) => {
-				await changeWeek(date)
-				selectedDate = date
-			}} {color} />
-		</div>
-	{/await}
+	<div class="flex justify-center">
+		<Year on:storeData={async ({ detail: date }) => {
+			await changeWeek(date)
+			selectedDate = date
+		}} cases={newdata.cases} />
+	</div>
+		
 </div>

@@ -7,20 +7,9 @@ import moment from 'moment';
 export async function GET({ params }) {
     const date = moment(params.date);
     const user = params.user;
-
-    console.log({date, user});
     
-    
-    const monday = moment(date);
-    const sunday = moment(date);
-    
-    if (monday.day() === 0) {
-        monday.day(-6).hour(0).minute(0).second(0);
-        sunday.day(0).hour(23).minute(59).second(59);
-    } else {
-        monday.day(1).hour(0).minute(0).second(0);
-        sunday.day(7).hour(23).minute(59).second(59);
-    }
+    const monday = moment(date).startOf('isoWeek');
+    const sunday = moment(date).endOf('isoWeek');
 
     const data = await prisma.user.findUnique({
         where: {

@@ -6,8 +6,8 @@
 
 	export let newdata: PageData;
 	export let selectedDate: Date;
-	$: cases = newdata.cases ? newdata.cases : [];
-	$:currentDay = selectedDate.getDay() === 0 ? 6 : selectedDate.getDay() - 1;
+	$: cases = newdata.week ? newdata.week : [];
+	$: currentDay = selectedDate.getDay() === 0 ? 6 : selectedDate.getDay() - 1;
 
 </script>
 
