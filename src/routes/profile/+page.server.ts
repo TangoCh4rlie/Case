@@ -5,29 +5,13 @@ import moment from "moment";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async (event) => {
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-    const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? - 6 : 1);
-    const lastMonday = new Date(today.setDate(diff));
-    lastMonday.setHours(0, 0, 0, 0);    
+    const session = await event.locals.auth(); 
 
-    const session = await event.locals.auth();    
-
-    const userColorCases = await prisma.user.findUnique({
-        where: {
-            name: session?.user?.name as string,
-        },
-        select: {
-            cases: {
-                select: {
-                    date: true,
-                    color: true,
-                }
-            }
-        },
-    });
-
-    const userWithCases = await prisma.user.findUnique({
+    const today = moment();
+    const firstJanuary = moment().startOf('year');
+    const lastMonday = moment().startOf('isoWeek');
+    
+    const data = await prisma.user.findUnique({
         where: {
             name: session?.user?.name as string,
         },
@@ -41,28 +25,26 @@ export const load: PageServerLoad = async (event) => {
                 },
                 where: {
                     date: {
-                        gte: lastMonday,
-                        lte: new Date()
+                        gte: firstJanuary.toDate(),
+                        lte: today.toDate()
                     }
                 }
             }
-        },
-    });
-
-    if ( !userWithCases ) {
-        return { user: null, cases: null };
-    } else {
-        const user = {id: userWithCases.id ,name: userWithCases.name, img: userWithCases.image}
-
-        const casesWeek: Case[] = remplirDatesManquantesSemainePrecedente(userWithCases?.cases, moment().toDate());
-
-        const cases = casesWeek
-
-        if ( !userColorCases ) {
-            return { user , cases, color: null };
         }
-        const color = userColorCases
+    })   
+
+    if (!data) {
+        return { data: null };
+    } else {
+        // Récupération des données de l'utilisateur
+        const user = {id: data.id ,name: data.name, img: data.image};
+        // Récupération de toutes les cases de l'utilisateur sur l'année actuelle
+        const cases: Case[] = data.cases;
         
-        return { user , cases, color };
+        // Récupération des données de la semaine actuelle
+        let week: Case[] = cases.filter(data => data.date >= lastMonday.toDate() && data.date <= today.toDate());
+        week = remplirDatesManquantesSemainePrecedente(week, moment().toDate());
+
+        return { user, cases, week };
     }
 };
