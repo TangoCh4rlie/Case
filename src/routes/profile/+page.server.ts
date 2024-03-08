@@ -4,8 +4,6 @@ import { remplirDatesManquantesSemainePrecedente } from "$lib/utils/manipulateWe
 import moment from "moment";
 import type { PageServerLoad } from "./$types";
 
-export const prerender = true;
-
 export const load: PageServerLoad = async (event) => {
     const today = new Date();
     const dayOfWeek = today.getDay();
