@@ -36,9 +36,12 @@ export const load: PageServerLoad = async (event) => {
     if (!data) {
         return { data: null };
     } else {
+        // Récupération des données de l'utilisateur
         const user = {id: data.id ,name: data.name, img: data.image};
+        // Récupération de toutes les cases de l'utilisateur sur l'année actuelle
         const cases: Case[] = data.cases;
         
+        // Récupération des données de la semaine actuelle
         let week: Case[] = cases.filter(data => data.date >= lastMonday.toDate() && data.date <= today.toDate());
         week = remplirDatesManquantesSemainePrecedente(week, moment().toDate());
 
