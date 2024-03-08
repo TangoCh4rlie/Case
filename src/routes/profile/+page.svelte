@@ -1,13 +1,13 @@
 <script lang="ts">
 	import Week from '$lib/components/Week.svelte';
-	import Life from '$lib/components/Year.svelte';
+	import Year from '$lib/components/Year.svelte';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import { getWeek, storeDataInBd } from '$lib/utils/controlerWeekInBd';
 
 	export let data: PageData;
 	$: newdata = data;
-	
+	let selectedDate = new Date();
 
 	// onMount(() => {
 	// 	window.addEventListener('beforeunload', () => {
@@ -30,8 +30,7 @@
 
 	const changeWeek = async (date: Date) => {
 		// storeDataInBd(newdata);
-		newdata.cases = await getWeek(date);
-		// console.log(newdata.cases);
+		newdata.cases = await getWeek(date, data.user?.name);
 		
 	};
 
@@ -39,13 +38,16 @@
 </script>
 
 <div>
-	<Week {newdata} />
+	<Week {newdata} {selectedDate} />
 	<button on:click={() => storeDataInBd(newdata)}>Store newdata</button>
 	{#await newdata.color}
 		<p>Loading</p>
 	{:then color}
 		<div class="flex justify-center">
-			<Life on:storeData={({ detail: date }) => changeWeek(date)} {color} />
+			<Year on:storeData={async ({ detail: date }) => {
+				await changeWeek(date)
+				selectedDate = date
+			}} {color} />
 		</div>
 	{/await}
 </div>

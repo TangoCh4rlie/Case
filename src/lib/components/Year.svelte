@@ -69,7 +69,8 @@
 				<button 
 					on:click={() => {
 						triggerEventStoreData(i.date);
-					}} 
+					}}
+					class="{i.date.toLocaleDateString() === new Date().toLocaleDateString() ? 'today' : ''}"
 					style="background-color: #{Color[i.color]}"></button>
 			{/each}
 		</ul>
@@ -138,5 +139,9 @@
 	.squares button {
 		background-color: #ebedf0;
 		border-radius: 5px;
+	}
+
+	.squares button.today {
+		border: 2px dashed #ff0000;
 	}
 </style>

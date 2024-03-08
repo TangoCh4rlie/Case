@@ -2,25 +2,16 @@
 	import type { PageData } from '../../routes/profile/$types';
 	import ColorPicker from './ColorPicker.svelte';
 	import { Color } from '$lib/types/case';
+	import moment from 'moment';
 
 	export let newdata: PageData;
+	export let selectedDate: Date;
 	$: cases = newdata.cases ? newdata.cases : [];
-	
-	// const emptyCases: string[] = [];
-	// const lengthCases = newdata.cases ? newdata.cases.length : 0;
-
-	// //remplir les cases avec des cases vide
-	// while (lengthCases + emptyCases.length < 7) {
-	// 	emptyCases.push('emptyCase');
-	// }
-
-	const today = new Date().getDay() - 1;
-	let currentDay = today;
+	$:currentDay = selectedDate.getDay() === 0 ? 6 : selectedDate.getDay() - 1;
 
 </script>
 
 <div>
-	{currentDay}
 	<div class="flex justify-center m-6">
 		<div class="grid grid-cols-7 gap-10">
 			{#each cases as info}
@@ -35,8 +26,8 @@
 						>
 							{info.description}
 						</button>
-					{:else}
-						<button class="case {currentDay === cases.indexOf(info) ? 'active' : ''}"
+					<!-- {:else if moment(info.date).format('YYYY MM DD') == moment().format('YYYY MM DD')}
+						<button class="case {currentDay === cases.indexOf(info) ? 'active' : ''} today"
 							id="case-{info.id}"
 							style="background-color: #{Color[info.color]}"
 							on:click={() => {
@@ -44,7 +35,15 @@
 							}}
 						>
 							{info.description}
-						</button>
+						</button> -->
+					{:else}
+						<button class="case {currentDay === cases.indexOf(info) ? 'active' : ''}"
+							id="case-{info.id}"
+							style="background-color: #{Color[info.color]}"
+							on:click={() => {
+								currentDay = cases.indexOf(info);
+							}}
+						/>
 					{/if}		
 				{:else}
 					<button
@@ -68,18 +67,22 @@
 			}}>left</button
 		>
 		<div class="flex flex-col border">
-			<div class="flex flex-row ">
-				<!-- {#if newdata.cases}
-					<div>Journée du {newdata.cases[currentDay].date}</div>
-				{/if} -->
-				<ColorPicker bind:color={cases[currentDay].color} />
-			</div>
-			<input
-				type="text"
-				class="w-full p-2 bg-transparent"
-				placeholder="Ajouter une description"
-				bind:value={cases[currentDay].description}
-			/>
+			{#if newdata.cases}
+				{#if new Date(newdata.cases[currentDay].date).getTime() >= new Date().getTime()}
+					<p>Impossible de mofier ce jour</p>	
+				{:else}
+					<div class="flex flex-row ">
+						<div>Journée du {new Date(newdata.cases[currentDay].date).toLocaleDateString()}</div>
+						<ColorPicker bind:color={cases[currentDay].color} />
+					</div>
+					<input
+						type="text"
+						class="w-full p-2 bg-transparent"
+						placeholder="Ajouter une description"
+						bind:value={cases[currentDay].description}
+					/>
+				{/if}
+			{/if}
 		</div>
 		<button
 			on:click={() => {
@@ -107,4 +110,8 @@
 	.case.active {
 	  	transform: scale(1.25);
 	}
+/* 
+	.case.today {
+		border: 2px dashed #ff0000
+	} */
   </style>
