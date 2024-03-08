@@ -6,16 +6,18 @@ import type { PageServerLoad } from "./$types";
 
 export const prerender = true;
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async (event) => {
     const today = new Date();
     const dayOfWeek = today.getDay();
     const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? - 6 : 1);
     const lastMonday = new Date(today.setDate(diff));
-    lastMonday.setHours(0, 0, 0, 0);
+    lastMonday.setHours(0, 0, 0, 0);    
+
+    const session = await event.locals.auth();    
 
     const userColorCases = await prisma.user.findUnique({
         where: {
-            username: "JohnDoe",
+            name: session?.user?.name as string,
         },
         select: {
             cases: {
@@ -29,12 +31,12 @@ export const load: PageServerLoad = async () => {
 
     const userWithCases = await prisma.user.findUnique({
         where: {
-            username: "JohnDoe",
+            name: session?.user?.name as string,
         },
         select: {
             id: true,
-            username: true,
-            img: true,
+            name: true,
+            image: true,
             cases: {
                 orderBy: {
                     date: 'asc'
@@ -52,11 +54,12 @@ export const load: PageServerLoad = async () => {
     if ( !userWithCases ) {
         return { user: null, cases: null };
     } else {
-        const user = {id: userWithCases.id ,username: userWithCases.username, img: userWithCases.img}
+        const user = {id: userWithCases.id ,name: userWithCases.name, img: userWithCases.image}
 
         const casesWeek: Case[] = remplirDatesManquantesSemainePrecedente(userWithCases?.cases, moment().toDate());
 
         const cases = casesWeek
+
         if ( !userColorCases ) {
             return { user , cases, color: null };
         }

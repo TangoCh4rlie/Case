@@ -6,6 +6,10 @@ import moment from 'moment';
 
 export async function GET({ params }) {
     const date = moment(params.date);
+    const user = params.user;
+
+    console.log({date, user});
+    
     
     const monday = moment(date);
     const sunday = moment(date);
@@ -20,7 +24,7 @@ export async function GET({ params }) {
 
     const data = await prisma.user.findUnique({
         where: {
-            username: 'JohnDoe'
+            name: user
         },
         select: {
             cases: {
