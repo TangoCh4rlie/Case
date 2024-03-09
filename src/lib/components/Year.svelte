@@ -5,7 +5,6 @@
 	const dispatch = createEventDispatcher();
 	export let cases;
 	
-	// @ts-ignores
 	const tableOfData: Case[] = cases;
 
 	const casesToDisplay: any[] = [];
