@@ -15,6 +15,7 @@
 		</div>
 		<h1 class="text-4xl font-bold">My Cases</h1>
 	</a>
+	<p>{$page.data.session?.user?.name}</p>
 	<div>
 		{#if $page.data.session}
 			<a href="/profile" class="buttonPrimary">Profile</a>

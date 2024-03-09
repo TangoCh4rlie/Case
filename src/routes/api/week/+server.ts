@@ -34,8 +34,8 @@ export async function POST({ request }) {
                 })
             })
         );
-        return json({ message: 'Success' });
+        return json({ status: 200, message: 'Success' });
     } catch (error) {
-        return json({ message: 'Error' });
+        return json({ status: 500, message: 'Error when updating cases' });
     }
 }

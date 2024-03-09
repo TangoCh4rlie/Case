@@ -3,7 +3,7 @@
 	import Year from '$lib/components/Year.svelte';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import { storeDataInBd } from '$lib/utils/controlerWeekInBd';
+	import { storeDataInBd } from '$lib/utils/controlerWeek';
 	import moment from 'moment';
 	import { remplirDatesManquantesSemainePrecedente } from '$lib/utils/manipulateWeek';
 
@@ -52,5 +52,4 @@
 			selectedDate = date
 		}} cases={newdata.cases} />
 	</div>
-		
 </div>
