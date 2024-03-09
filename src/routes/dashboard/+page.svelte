@@ -3,7 +3,9 @@
 	import Year from '$lib/components/Year.svelte';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import { getWeek, storeDataInBd } from '$lib/utils/controlerWeekInBd';
+	import { storeDataInBd } from '$lib/utils/controlerWeekInBd';
+	import moment from 'moment';
+	import { remplirDatesManquantesSemainePrecedente } from '$lib/utils/manipulateWeek';
 
 	export let data: PageData;
 	$: newdata = data;
@@ -30,8 +32,12 @@
 	// });
 
 	const changeWeek = async (date: Date) => {
-		// storeDataInBd(newdata);
-		newdata.week = await getWeek(date, data.user?.name as string);
+    	const monday = moment(date).startOf('isoWeek');
+		const sunday = moment(date).endOf('isoWeek');
+		if (newdata) {
+			newdata.week = (newdata.cases ?? []).filter(data => data.date >= monday.toDate() && data.date <= sunday.toDate());
+        	newdata.week = remplirDatesManquantesSemainePrecedente(newdata.week, moment(date).toDate());
+		}
 	};
 
 

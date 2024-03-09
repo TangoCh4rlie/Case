@@ -3,6 +3,6 @@
 </script>
 
 <div >
-	<a href="/profile">Profile</a>
-	<a href="/test">Signin</a>
+	<a href="/dashboard">Profile</a>
+	<a href="/login">Signin</a>
 </div>
