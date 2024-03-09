@@ -1,17 +1,18 @@
 <script>
 	import '../app.pcss';
 	import { SignIn } from '@auth/sveltekit/components';
-	import src from '$lib/images/LogoMyCasesNoBG.png';
 	import { page } from '$app/stores';
 </script>
 
 <header>
 	<a href="/" class="flex flex-row items-center">
-		<img 
-			{src} 
-			alt="Logo de l'application MyCase"
-			class="w-10 m-3"
-		>
+		<div>
+			<enhanced:img 
+				src="$lib/assets/images/LogoMyCasesNoBg.png"
+				alt="Logo de l'application MyCase"
+				class="w-10 m-3"
+			>
+		</div>
 		<h1 class="text-4xl font-bold">My Cases</h1>
 	</a>
 	<div>
