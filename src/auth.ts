@@ -14,7 +14,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
     adapter: PrismaAdapter(prisma),
     callbacks: {
         async redirect() {
-            return '/profile'
+            return '/'
         }
       }
 })

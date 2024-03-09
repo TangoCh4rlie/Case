@@ -3,7 +3,7 @@ import moment from "moment";
 
 export function remplirDatesManquantesSemainePrecedente(cases: Case[], dateParam: Date): Case[] {
     const finalData = new Array(7).fill(null);
-    const date = moment(dateParam).subtract(1, 'days');
+    const date = moment(dateParam).startOf('week').add(1, 'day')
 
     cases.forEach((c) => {
         if (c.date.getDay() === 0)
@@ -17,8 +17,7 @@ export function remplirDatesManquantesSemainePrecedente(cases: Case[], dateParam
         if (c === null) {
             finalData[finalData.indexOf(c)] = {
                 id: '',
-                //ca lag encore
-                date: date.add(1, 'days').toDate(),
+                date: date.toDate(),
                 description: ``,
                 color: "default",
                 place: null,
@@ -27,9 +26,8 @@ export function remplirDatesManquantesSemainePrecedente(cases: Case[], dateParam
                 tag: [],
                 userId: ''
             };
-        } else {
-            date.add(1, 'days').toDate()
         }
+        date.add(1, 'day');
     });
 
     return finalData;

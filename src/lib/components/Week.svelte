@@ -1,13 +1,12 @@
 <script lang="ts">
-	import type { PageData } from '../../routes/profile/$types';
 	import ColorPicker from './ColorPicker.svelte';
 	import { Color } from '$lib/types/case';
+	import type { PageData } from "../../routes/dashboard/$types"
 
 	export let newdata: PageData;
 	export let selectedDate: Date;
 	$: cases = newdata.week ? newdata.week : [];
 	$: currentDay = selectedDate.getDay() === 0 ? 6 : selectedDate.getDay() - 1;
-
 </script>
 
 <div>
@@ -23,6 +22,7 @@
 								currentDay = cases.indexOf(info);
 							}}
 						>
+							
 							{info.description}
 						</button>
 					<!-- {:else if moment(info.date).format('YYYY MM DD') == moment().format('YYYY MM DD')}
@@ -42,7 +42,10 @@
 							on:click={() => {
 								currentDay = cases.indexOf(info);
 							}}
-						/>
+						>
+							
+							{info.description}
+						</button>
 					{/if}		
 				{:else}
 					<button
@@ -53,6 +56,7 @@
 							currentDay = cases.indexOf(info);
 						}}
 					>
+						
 						{info.description}
 					</button>
 				{/if}
@@ -71,7 +75,7 @@
 					<p>Impossible de mofier ce jour</p>	
 				{:else}
 					<div class="flex flex-row ">
-						<div>Journée du {new Date(newdata.cases[currentDay].date).toLocaleDateString()}</div>
+						<div>Journée du {new Date(cases[currentDay].date).toLocaleDateString()}</div>
 						<ColorPicker bind:color={cases[currentDay].color} />
 					</div>
 					<input
