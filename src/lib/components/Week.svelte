@@ -2,11 +2,18 @@
 	import ColorPicker from './ColorPicker.svelte';
 	import { Color } from '$lib/types/case';
 	import type { PageData } from "../../routes/dashboard/$types"
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	export let newdata: PageData;
 	export let selectedDate: Date;
 	$: cases = newdata.week ? newdata.week : [];
 	$: currentDay = selectedDate.getDay() === 0 ? 6 : selectedDate.getDay() - 1;
+
+	const triggerEventStoreData = (date: Date, color: Color) => {
+		dispatch('changeColor', {date, color});
+	};
 </script>
 
 <div>
@@ -76,7 +83,12 @@
 				{:else}
 					<div class="flex flex-row ">
 						<div>Journée du {new Date(cases[currentDay].date).toLocaleDateString()}</div>
-						<ColorPicker bind:color={cases[currentDay].color} />
+						<ColorPicker 
+							on:changeColor={async ({ detail: color }) => {								
+								triggerEventStoreData(cases[currentDay].date, color);
+							}}
+							bind:color={cases[currentDay].color} 
+						/>
 					</div>
 					<input
 						type="text"

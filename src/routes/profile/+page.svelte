@@ -6,9 +6,7 @@
 
     const changeUsername = () => {
         changeUserInfo(username, session?.user?.email as string);
-        
         console.log("Username changed");
-        
     }
 </script>
 

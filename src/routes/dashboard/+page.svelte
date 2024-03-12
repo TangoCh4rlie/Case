@@ -10,6 +10,7 @@
 	export let data: PageData;
 	$: newdata = data;
 	
+	
 	let selectedDate = new Date();
 
 	// onMount(() => {
@@ -39,12 +40,21 @@
         	newdata.week = remplirDatesManquantesSemainePrecedente(newdata.week, moment(date).toDate());
 		}
 	};
-
-
 </script>
 
 <div>
-	<Week {newdata} {selectedDate} />
+	<Week 
+		on:changeColor={async ({ detail: {color, date} }) => {
+			const foundCase = (newdata.cases ?? []).find(data => data.date.getTime() === date.getTime());
+			console.log(foundCase, date, color);
+			
+			if (foundCase) {
+				foundCase.color = color;
+			}
+		}} 
+		{newdata} 
+		{selectedDate}  
+	/>
 	<button on:click={() => storeDataInBd(newdata)}>Store newdata</button>
 	<div class="flex justify-center">
 		<Year on:storeData={async ({ detail: date }) => {

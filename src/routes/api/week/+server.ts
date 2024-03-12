@@ -7,6 +7,8 @@ export async function POST({ request }) {
     const cases: Case[] = body.cases;
     const userId: string = body.userId;
 
+    console.log(cases, userId);
+    
     try {
         await Promise.all(
             cases.map(async (c) => {

@@ -1,7 +1,7 @@
 import type { PageData } from "../../routes/dashboard/$types";
 
 export const storeDataInBd = async (data: PageData) => {
-    await fetch(import.meta.env.VITE_URL + '/api/week', {
+    const response = await fetch(import.meta.env.VITE_URL + '/api/week', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -13,4 +13,6 @@ export const storeDataInBd = async (data: PageData) => {
             userId: data.user?.id
         })
     });
+    console.log(response);
+    
 };

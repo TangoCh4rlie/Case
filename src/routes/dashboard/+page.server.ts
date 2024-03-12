@@ -15,7 +15,7 @@ export const load: PageServerLoad = async (event) => {
     
     const data = await prisma.user.findUnique({
         where: {
-            name: session?.user?.name as string,
+            email: session?.user?.email as string,
         },
         select: {
             id: true,
