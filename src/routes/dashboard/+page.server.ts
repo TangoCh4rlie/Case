@@ -4,7 +4,7 @@ import { remplirDatesManquantesSemainePrecedente } from '$lib/utils/manipulateWe
 import moment from 'moment';
 import type { PageServerLoad } from './$types';
 
-export const prerender = 'auto';
+// export const prerender = 'auto';
 
 export const load: PageServerLoad = async (event) => {
 	const session = await event.locals.auth();
