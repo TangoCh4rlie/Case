@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Week from '$lib/components/Week.svelte';
 	import Year from '$lib/components/Year.svelte';
-	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 	import { storeDataInBd } from '$lib/utils/controlerWeek';
 	import moment from 'moment';

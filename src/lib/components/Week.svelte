@@ -14,6 +14,14 @@
 	const triggerEventStoreData = (date: Date, color: Color) => {
 		dispatch('changeColor', { date, color });
 	};
+
+	function getColor(colorName: string) {
+		if (colorName in Color) {
+			return Color[colorName as keyof typeof Color];
+		} else {
+			return Color.default;
+		}
+	}
 </script>
 
 <div>
@@ -28,7 +36,7 @@
 								? 'dotted'
 								: ''}"
 							id="case-{info.id}"
-							style="background-color: #{Color[info.color]}"
+							style="background-color: #{getColor(info.color)}"
 							on:click={() => {
 								currentDay = cases.indexOf(info);
 							}}
@@ -49,7 +57,7 @@
 						<button
 							class="case {currentDay === cases.indexOf(info) ? 'active' : ''}"
 							id="case-{info.id}"
-							style="background-color: #{Color[info.color]}"
+							style="background-color: #{getColor(info.color)}"
 							on:click={() => {
 								currentDay = cases.indexOf(info);
 							}}
@@ -64,7 +72,7 @@
 							? 'dotted'
 							: ''}"
 						id="case-{info.id}"
-						style="background-color: #{Color[info.color]}"
+						style="background-color: #{getColor(info.color)}"
 						on:click={() => {
 							currentDay = cases.indexOf(info);
 						}}

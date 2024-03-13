@@ -7,7 +7,7 @@
 
 	const tableOfData: Case[] = cases;
 
-	const casesToDisplay: any[] = [];
+	const casesToDisplay: { id: number; color: string; date: Date }[] = [];
 	const mois: string[] = [
 		'Janv',
 		'Févr',
@@ -30,6 +30,14 @@
 		}
 		position += jour - 1;
 		return position;
+	}
+
+	function getColor(colorName: string) {
+		if (colorName in Color) {
+			return Color[colorName as keyof typeof Color];
+		} else {
+			return Color.default;
+		}
 	}
 
 	let i = 0;
@@ -71,7 +79,7 @@
 						triggerEventStoreData(i.date);
 					}}
 					class={i.date.toLocaleDateString() === new Date().toLocaleDateString() ? 'today' : ''}
-					style="background-color: #{Color[i.color]}"
+					style="background-color: #{getColor(i.color)}"
 				></button>
 			{/each}
 		</ul>
