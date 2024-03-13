@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ColorPicker from './ColorPicker.svelte';
 	import { Color } from '$lib/types/case';
-	import type { PageData } from "../../routes/dashboard/$types"
+	import type { PageData } from '../../routes/dashboard/$types';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
@@ -12,7 +12,7 @@
 	$: currentDay = selectedDate.getDay() === 0 ? 6 : selectedDate.getDay() - 1;
 
 	const triggerEventStoreData = (date: Date, color: Color) => {
-		dispatch('changeColor', {date, color});
+		dispatch('changeColor', { date, color });
 	};
 </script>
 
@@ -20,19 +20,22 @@
 	<div class="flex justify-center m-6">
 		<div class="grid grid-cols-7 gap-10">
 			{#each cases as info}
-				{#if info.id === '' }
+				{#if info.id === ''}
 					{#if new Date(info.date).getTime() <= new Date().getTime()}
-						<button class="case {currentDay === cases.indexOf(info) ? 'active' : ''} {info.color === 'default' ? 'dotted' : ''}"
+						<button
+							class="case {currentDay === cases.indexOf(info) ? 'active' : ''} {info.color ===
+							'default'
+								? 'dotted'
+								: ''}"
 							id="case-{info.id}"
 							style="background-color: #{Color[info.color]}"
 							on:click={() => {
 								currentDay = cases.indexOf(info);
 							}}
 						>
-							
 							{info.description}
 						</button>
-					<!-- {:else if moment(info.date).format('YYYY MM DD') == moment().format('YYYY MM DD')}
+						<!-- {:else if moment(info.date).format('YYYY MM DD') == moment().format('YYYY MM DD')}
 						<button class="case {currentDay === cases.indexOf(info) ? 'active' : ''} today"
 							id="case-{info.id}"
 							style="background-color: #{Color[info.color]}"
@@ -43,27 +46,29 @@
 							{info.description}
 						</button> -->
 					{:else}
-						<button class="case {currentDay === cases.indexOf(info) ? 'active' : ''}"
+						<button
+							class="case {currentDay === cases.indexOf(info) ? 'active' : ''}"
 							id="case-{info.id}"
 							style="background-color: #{Color[info.color]}"
 							on:click={() => {
 								currentDay = cases.indexOf(info);
 							}}
 						>
-							
 							{info.description}
 						</button>
-					{/if}		
+					{/if}
 				{:else}
 					<button
-						class="case {currentDay === cases.indexOf(info) ? 'active' : ''} {info.color === 'default' ? 'dotted' : ''}"
+						class="case {currentDay === cases.indexOf(info) ? 'active' : ''} {info.color ===
+						'default'
+							? 'dotted'
+							: ''}"
 						id="case-{info.id}"
 						style="background-color: #{Color[info.color]}"
 						on:click={() => {
 							currentDay = cases.indexOf(info);
 						}}
 					>
-						
 						{info.description}
 					</button>
 				{/if}
@@ -79,15 +84,15 @@
 		<div class="flex flex-col border">
 			{#if newdata.cases}
 				{#if new Date(newdata.cases[currentDay].date).getTime() >= new Date().getTime()}
-					<p>Impossible de mofier ce jour</p>	
+					<p>Impossible de mofier ce jour</p>
 				{:else}
-					<div class="flex flex-row ">
+					<div class="flex flex-row">
 						<div>Journée du {new Date(cases[currentDay].date).toLocaleDateString()}</div>
-						<ColorPicker 
-							on:changeColor={async ({ detail: color }) => {								
+						<ColorPicker
+							on:changeColor={async ({ detail: color }) => {
 								triggerEventStoreData(cases[currentDay].date, color);
 							}}
-							bind:color={cases[currentDay].color} 
+							bind:color={cases[currentDay].color}
 						/>
 					</div>
 					<input
@@ -121,12 +126,12 @@
 	.case.dotted {
 		border: 2px dashed #9b9b9b;
 	}
-  
+
 	.case.active {
-	  	transform: scale(1.25);
+		transform: scale(1.25);
 	}
-/* 
+	/* 
 	.case.today {
 		border: 2px dashed #ff0000
 	} */
-  </style>
+</style>

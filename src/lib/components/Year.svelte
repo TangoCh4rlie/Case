@@ -4,7 +4,7 @@
 
 	const dispatch = createEventDispatcher();
 	export let cases;
-	
+
 	const tableOfData: Case[] = cases;
 
 	const casesToDisplay: any[] = [];
@@ -31,15 +31,16 @@
 		position += jour - 1;
 		return position;
 	}
-	
 
 	let i = 0;
 	while (i <= 365) {
-		casesToDisplay.push({ id: i++, color: Color.default, date: new Date(2024, 0, i)});
+		casesToDisplay.push({ id: i++, color: Color.default, date: new Date(2024, 0, i) });
 	}
 
-	tableOfData.forEach(element => {
-		casesToDisplay[positionJourAnnee(element.date.getMonth() + 1, element.date.getDate() + 1) - 1].color = element.color;
+	tableOfData.forEach((element) => {
+		casesToDisplay[
+			positionJourAnnee(element.date.getMonth() + 1, element.date.getDate() + 1) - 1
+		].color = element.color;
 	});
 
 	const triggerEventStoreData = (date: Date) => {
@@ -65,12 +66,13 @@
 		</ul>
 		<ul class="squares">
 			{#each casesToDisplay as i}
-				<button 
+				<button
 					on:click={() => {
 						triggerEventStoreData(i.date);
 					}}
-					class="{i.date.toLocaleDateString() === new Date().toLocaleDateString() ? 'today' : ''}"
-					style="background-color: #{Color[i.color]}"></button>
+					class={i.date.toLocaleDateString() === new Date().toLocaleDateString() ? 'today' : ''}
+					style="background-color: #{Color[i.color]}"
+				></button>
 			{/each}
 		</ul>
 	</div>
