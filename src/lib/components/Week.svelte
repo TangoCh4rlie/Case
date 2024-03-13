@@ -27,9 +27,46 @@
 <div>
 	<div class="flex justify-center m-6">
 		<div class="grid grid-cols-7 gap-10">
-			{#each cases as info}
-				{#if info.id === ''}
-					{#if new Date(info.date).getTime() <= new Date().getTime()}
+			{#if cases && newdata}
+				{#each cases as info}
+					{#if info.id === ''}
+						{#if new Date(info.date).getTime() <= new Date().getTime()}
+							<button
+								class="case {currentDay === cases.indexOf(info) ? 'active' : ''} {info.color ===
+								'default'
+									? 'dotted'
+									: ''}"
+								id="case-{info.id}"
+								style="background-color: #{getColor(info.color)}"
+								on:click={() => {
+									currentDay = cases.indexOf(info);
+								}}
+							>
+								{info.description}
+							</button>
+							<!-- {:else if moment(info.date).format('YYYY MM DD') == moment().format('YYYY MM DD')}
+					<button class="case {currentDay === cases.indexOf(info) ? 'active' : ''} today"
+						id="case-{info.id}"
+						style="background-color: #{Color[info.color]}"
+						on:click={() => {
+							currentDay = cases.indexOf(info);
+						}}
+					>
+						{info.description}
+					</button> -->
+						{:else}
+							<button
+								class="case {currentDay === cases.indexOf(info) ? 'active' : ''}"
+								id="case-{info.id}"
+								style="background-color: #{getColor(info.color)}"
+								on:click={() => {
+									currentDay = cases.indexOf(info);
+								}}
+							>
+								{info.description}
+							</button>
+						{/if}
+					{:else}
 						<button
 							class="case {currentDay === cases.indexOf(info) ? 'active' : ''} {info.color ===
 							'default'
@@ -43,44 +80,9 @@
 						>
 							{info.description}
 						</button>
-						<!-- {:else if moment(info.date).format('YYYY MM DD') == moment().format('YYYY MM DD')}
-						<button class="case {currentDay === cases.indexOf(info) ? 'active' : ''} today"
-							id="case-{info.id}"
-							style="background-color: #{Color[info.color]}"
-							on:click={() => {
-								currentDay = cases.indexOf(info);
-							}}
-						>
-							{info.description}
-						</button> -->
-					{:else}
-						<button
-							class="case {currentDay === cases.indexOf(info) ? 'active' : ''}"
-							id="case-{info.id}"
-							style="background-color: #{getColor(info.color)}"
-							on:click={() => {
-								currentDay = cases.indexOf(info);
-							}}
-						>
-							{info.description}
-						</button>
 					{/if}
-				{:else}
-					<button
-						class="case {currentDay === cases.indexOf(info) ? 'active' : ''} {info.color ===
-						'default'
-							? 'dotted'
-							: ''}"
-						id="case-{info.id}"
-						style="background-color: #{getColor(info.color)}"
-						on:click={() => {
-							currentDay = cases.indexOf(info);
-						}}
-					>
-						{info.description}
-					</button>
-				{/if}
-			{/each}
+				{/each}
+			{/if}
 		</div>
 	</div>
 	<div class="flex flex-rows justify-center">
