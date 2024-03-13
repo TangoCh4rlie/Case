@@ -7,14 +7,16 @@
 <header>
 	<a href="/" class="flex flex-row items-center">
 		<div>
-			<enhanced:img 
+			<enhanced:img
 				src="$lib/assets/images/LogoMyCasesNoBg.png"
 				alt="Logo de l'application MyCase"
 				class="w-10 m-3"
 			>
+			</enhanced:img>
 		</div>
 		<h1 class="text-4xl font-bold">My Cases</h1>
 	</a>
+	<p>{$page.data.session?.user?.name}</p>
 	<div>
 		{#if $page.data.session}
 			<a href="/profile" class="buttonPrimary">Profile</a>
