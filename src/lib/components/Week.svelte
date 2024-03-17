@@ -27,7 +27,7 @@
 <div>
 	<div class="flex justify-center m-6">
 		<div class="grid grid-cols-7 gap-10">
-			{#if cases && newdata && newdata.cases}
+			{#if cases && newdata}
 				{#each cases as info}
 					{#if info.id === ''}
 						{#if new Date(info.date).getTime() <= new Date().getTime()}
