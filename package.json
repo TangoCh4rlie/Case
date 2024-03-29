@@ -10,14 +10,14 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test": "vitest",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write .",
-		"postinstall": "prisma generate && prisma migrate dev"
+		"format": "prettier --write ."
 	},
 	"prisma": {
 		"seed": "node --loader ts-node/esm prisma/seed.ts"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/adapter-node": "^5.0.1",
 		"@sveltejs/enhanced-img": "^0.1.8",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
